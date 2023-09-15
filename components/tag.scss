@@ -1,0 +1,119 @@
+@use "../termeh" as T;
+
+.tag {
+    display: inline-flex;
+    width: auto;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+    padding: 0 T.gap("micro");
+    border-radius: T.var("radius", "normal");
+    line-height: T.var("line-height", "inline", 1.6em);
+    font-size: T.var("tag", "size");
+    @include T.unselectable();
+    @include T.transition(all);
+
+    > * {
+        margin: auto;
+    }
+
+    &.is-action {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    &.is-loading {
+        @include T.locked();
+        @include T.loader(1em, transparent, T.var("decorator", "size"));
+    }
+
+    &:not(.is-light) {
+        color: T.variant("shade", "color");
+        background-color: T.color("shade");
+
+        &.is-action:hover {
+            background: T.variant("shade", "active");
+        }
+
+        &.is-loading {
+            color: T.color("shade");
+            @include T.loader-color(T.variant("shade", "color"));
+        }
+    }
+
+    &.is-light {
+        color: T.variant("shade", "readable");
+        background-color: T.variant("shade", "light");
+
+        &.is-action:hover {
+            background: T.variant(
+                "shade",
+                "light-active",
+                T.variant("shade", "mute")
+            );
+        }
+
+        &.is-loading {
+            color: T.variant("shade", "light");
+            @include T.loader-color(T.variant("shade", "readable"));
+        }
+    }
+
+    &:not(.is-wrap) {
+        white-space: nowrap;
+    }
+
+    &.is-rounded {
+        border-radius: T.var("radius", "rounded");
+    }
+
+    @each $name, $size in T.sizes(T.var("tag", "sizes", ())) {
+        &.is-#{$name} {
+            font-size: $size;
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("tag", "colors", ())) {
+        &.is-#{$name} {
+            &:not(.is-light) {
+                background-color: $color;
+                color: T.variant($name, "color");
+
+                &.is-action:hover {
+                    background: T.variant($name, "active");
+                }
+
+                &.is-loading {
+                    color: $color;
+                    @include T.loader-color(T.variant($name, "color"));
+                }
+            }
+
+            &.is-light {
+                background-color: T.variant($name, "light");
+                color: T.variant($name, "readable");
+
+                &.is-action:hover {
+                    background: T.variant(
+                        $name,
+                        "light-active",
+                        T.variant($name, "mute")
+                    );
+                }
+
+                &.is-loading {
+                    color: T.variant($name, "light");
+                    @include T.loader-color(T.variant($name, "readable"));
+                }
+            }
+        }
+    }
+
+    &:disabled,
+    &.is-disabled,
+    fieldset[disabled] & {
+        background: T.variant("input", "disabled") !important;
+        color: T.variant("input", "disabled-color") !important;
+        @include T.locked();
+    }
+}

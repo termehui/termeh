@@ -1,0 +1,170 @@
+@use "sass:math";
+@use "../termeh" as T;
+
+.gaper {
+    $-gaps: T.var("gaper", "gaps", ());
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+
+    > * {
+        flex: 0 0 auto;
+    }
+
+    > .filler {
+        flex: 1 1 0;
+    }
+
+    > .separator,
+    > .gutter {
+        display: block;
+        align-self: stretch;
+        width: 1px;
+    }
+
+    > .separator {
+        background-color: T.variant("base", "separator");
+    }
+
+    &.is-stacked {
+        flex-direction: column;
+        &-reverse {
+            flex-direction: column-reverse;
+        }
+    }
+
+    &.is-stacked,
+    &.is-stacked-reverse {
+        > .separator,
+        > .gutter {
+            height: 1px;
+            width: unset;
+        }
+    }
+
+    &.is-auto {
+        margin: T.negate(T.gap("micro"));
+
+        > * {
+            margin: T.gap("micro");
+        }
+
+        @each $name, $gap in T.gaps($-gaps) {
+            &.is-#{$name}-gaped {
+                margin: T.negate(math.div($gap, 2));
+
+                > * {
+                    margin: math.div($gap, 2);
+                }
+            }
+        }
+    }
+
+    &:not(.is-auto) {
+        > .separator,
+        > .gutter {
+            margin: 0 T.gap("micro");
+        }
+
+        &.is-stacked,
+        &.is-stacked-reverse {
+            > .separator,
+            > .gutter {
+                margin: T.gap("micro") 0;
+            }
+        }
+
+        @each $name, $gap in T.gaps($-gaps) {
+            &.is-#{$name}-gaped {
+                > .separator,
+                > .gutter {
+                    margin: 0 math.div($gap, 2);
+                }
+
+                &.is-stacked,
+                &.is-stacked-reverse {
+                    > .separator,
+                    > .gutter {
+                        margin: math.div($gap, 2) 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &.is-wrap {
+        flex-wrap: wrap;
+    }
+
+    $-aligns: stretch, flex-start, flex-end, center, baseline;
+    @each $align in $-aligns {
+        &.is-#{$align}-aligned {
+            align-items: $align;
+        }
+    }
+
+    $-justifies: flex-start, flex-end, center, space-between, space-around,
+        space-evenly;
+    @each $justify in $-justifies {
+        &.is-#{$justify}-justified {
+            justify-content: $justify;
+        }
+    }
+
+    @each $device, $query in T.media-queries() {
+        @media #{$query} {
+            &.is-#{$device}-stacked {
+                flex-direction: column;
+                &-reverse {
+                    flex-direction: column-reverse;
+                }
+            }
+
+            &.is-#{$device}-stacked,
+            &.is-#{$device}-stacked-reverse {
+                > .separator,
+                > .gutter {
+                    height: 1px;
+                    width: unset;
+                }
+            }
+
+            &:not(.is-auto) {
+                &.is-#{$device}-stacked,
+                &.is-#{$device}-stacked-reverse {
+                    > .separator,
+                    > .gutter {
+                        margin: T.gap("micro") 0;
+                    }
+                }
+
+                @each $name, $gap in T.gaps($-gaps) {
+                    &.is-#{$name}-gaped {
+                        &.is-#{$device}-stacked,
+                        &.is-#{$device}-stacked-reverse {
+                            > .separator,
+                            > .gutter {
+                                margin: math.div($gap, 2) 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @each $align in $-aligns {
+                &.is-#{$device}-#{$align}-aligned {
+                    align-items: $align;
+                }
+            }
+
+            @each $justify in $-justifies {
+                &.is-#{$device}-#{$justify}-justified {
+                    justify-content: $justify;
+                }
+            }
+        }
+    }
+}

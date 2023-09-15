@@ -1,0 +1,211 @@
+@use "sass:list";
+@use "../termeh" as T;
+
+.card {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: T.gap("macro");
+    border-radius: T.var("radius", "normal");
+    background-color: T.variant("base", "box", white);
+    border: T.var("card", "border");
+    box-shadow: T.var(
+        "card",
+        "shadow",
+        (
+            T.shadow(0, 3px, T.color("shade"), false),
+            T.shadow(0, 6px, T.color("shade"), true)
+        )
+    );
+
+    > .separator {
+        display: block;
+        height: 1px;
+        background: T.variant("base", "separator");
+
+        &.is-attached {
+            margin: 0 T.negate(T.gap("macro"));
+        }
+    }
+
+    > .section {
+        display: block;
+        margin: 0 T.negate(T.gap("macro"));
+        padding: 0;
+        z-index: 1;
+
+        &:first-child,
+        &.is-header {
+            margin-top: T.negate(T.gap("macro"));
+        }
+
+        &:last-child,
+        &.is-footer {
+            margin-bottom: T.negate(T.gap("macro"));
+        }
+
+        &:not(.is-attached) {
+            padding: T.gap("macro");
+        }
+
+        &.is-secondary {
+            background: T.variant("base", "section");
+        }
+    }
+
+    > .overlay {
+        display: flex;
+        position: absolute;
+        box-sizing: border-box;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        opacity: 0;
+        z-index: -1;
+        overflow: hidden;
+        overflow-y: auto;
+        padding: T.gap("macro");
+        color: T.var("overlay", "color");
+        background: T.var("overlay", "background");
+        backdrop-filter: T.var("overlay", "filter");
+        @include T.transition(all);
+        @include T.scrollable(T.color("primary"));
+
+        & > * {
+            margin: auto;
+            max-width: 100%;
+        }
+    }
+
+    &.is-top-decorated {
+        border-top: T.var("decorator", "size") solid T.color("shade");
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    &.is-bottom-decorated {
+        border-bottom: T.var("decorator", "size") solid T.color("shade");
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    &.is-loading {
+        @include T.overlay(
+            T.var("overlay", "background"),
+            T.var("overlay", "filter")
+        );
+        @include T.loader(
+            T.var("spinner", "size"),
+            T.var("overlay", "color", T.color("shade")),
+            T.var("decorator", "size")
+        );
+    }
+
+    &.is-overlaid:not(.is-loading) {
+        > .overlay {
+            z-index: 2;
+            opacity: 1;
+        }
+    }
+
+    &:not(.is-overlaid):not(.is-loading) > .section {
+        &.top-sticky {
+            position: sticky;
+            top: T.negate(T.gap("macro"));
+            background: white;
+        }
+
+        &.bottom-sticky {
+            position: sticky;
+            bottom: T.negate(T.gap("macro"));
+            background: white;
+        }
+    }
+
+    @each $name, $gap in T.gaps(T.var("card", "gaps", ())) {
+        &.is-#{$name}-padded {
+            padding: $gap;
+
+            > .separator.is-attached {
+                margin: 0 T.negate($gap);
+            }
+
+            > .section {
+                margin: 0 T.negate($gap);
+
+                &:first-child,
+                &.is-header {
+                    margin-top: T.negate($gap);
+                }
+
+                &:last-child,
+                &.is-footer {
+                    margin-bottom: T.negate($gap);
+                }
+
+                &:not(.is-attached) {
+                    padding: $gap;
+                }
+            }
+
+            > .overlay {
+                padding: $gap;
+            }
+
+            &:not(.is-overlaid):not(.is-loading) > .section {
+                &.top-sticky {
+                    position: sticky;
+                    top: T.negate($gap);
+                    background: white;
+                }
+
+                &.bottom-sticky {
+                    position: sticky;
+                    bottom: T.negate($gap);
+                    background: white;
+                }
+            }
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("card", "colors", ())) {
+        &.is-#{$name} {
+            border: T.var("card", "border-#{$name}");
+            box-shadow: T.var("card", "shadow-#{$name}");
+
+            > .overlay {
+                @include T.scroll-color($color);
+            }
+
+            &.is-top-decorated {
+                border-top-color: $color;
+            }
+
+            &.is-bottom-decorated {
+                border-bottom-color: $color;
+            }
+
+            &.is-loading {
+                @include T.loader-color(
+                    T.variant(
+                        $name,
+                        "overlay",
+                        T.variant($name, "readable", $color)
+                    )
+                );
+            }
+
+            @include T.selection($name);
+        }
+    }
+
+    @each $size in T.var("card", "sizes", ()) {
+        $name: list.nth($size, 1);
+        $width: list.nth($size, 2);
+        &.is-#{$name} {
+            width: $width;
+        }
+    }
+}

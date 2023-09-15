@@ -1,0 +1,45 @@
+@use "sass:math";
+@use "../termeh" as T;
+
+.link {
+    @include T.control();
+    cursor: pointer;
+    text-shadow: none;
+    display: inline-block;
+    text-decoration: none;
+    line-height: T.var("line-height", "inline", 1.6em);
+
+    &::after {
+        content: " ";
+        position: absolute;
+        left: 50%;
+        bottom: 0%;
+        width: 0%;
+        height: 1px;
+        transform: translateX(-50%);
+        background: currentColor;
+        @include T.transition(all);
+    }
+
+    &:hover {
+        text-decoration: none;
+        &::after {
+            width: 100%;
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("link", "colors", ())) {
+        &.is-#{$name} {
+            color: T.variant($name, "readable");
+
+            @include T.selection($name);
+        }
+    }
+
+    &:disabled,
+    &.is-disabled {
+        color: T.variant("input", "disabled-color") !important;
+        @include T.locked();
+        opacity: 0.25;
+    }
+}

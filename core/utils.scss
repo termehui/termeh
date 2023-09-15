@@ -1,0 +1,18 @@
+@use "sass:math";
+@use "helper";
+
+@function negate($value) {
+    $value: helper.number-of($value, "negate", "value");
+    @return -$value;
+}
+
+@function half($value) {
+    $value: helper.number-of($value, "half", "value");
+    @return math.div($value, 2);
+}
+
+@mixin unify-parent($child) {
+    @at-root #{selector.unify(&, $child)} {
+        @content;
+    }
+}

@@ -1,0 +1,108 @@
+@use "../termeh" as T;
+
+.icon {
+    display: inline-flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    @include T.transition(all);
+
+    img {
+        display: block;
+        max-height: 100%;
+        max-width: 100%;
+        @include T.transition(all);
+    }
+
+    svg {
+        width: 100%;
+        fill: currentColor;
+        @include T.transition(all);
+
+        > * {
+            fill: currentColor;
+        }
+    }
+
+    &.is-outline {
+        svg {
+            fill: none;
+            stroke: currentColor;
+
+            > * {
+                fill: none;
+                stroke: currentColor;
+            }
+        }
+    }
+
+    &.is-action {
+        cursor: pointer;
+        text-decoration: none;
+        color: T.variant("shade", "mute");
+
+        > img {
+            filter: T.var("icon", "action-filter", grayscale(0.5));
+        }
+
+        &:hover {
+            text-decoration: none;
+            color: T.variant("base", "color");
+
+            > img {
+                filter: T.var("icon", "action-hover-filter", grayscale(0));
+            }
+        }
+    }
+
+    &.is-loading {
+        @include T.locked();
+        @include T.loader(1em, T.color("shade"), T.var("decorator", "size"));
+
+        > * {
+            opacity: 0;
+        }
+    }
+
+    @each $name, $size in T.sizes(T.var("icon", "sizes", ())) {
+        &.is-#{$name} {
+            height: $size;
+            width: $size;
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("icon", "colors", ())) {
+        &.is-#{$name} {
+            &:not(.is-action) {
+                color: T.variant($name, "readable");
+            }
+
+            &.is-action {
+                color: T.variant($name, "mute");
+
+                &:hover {
+                    color: T.variant($name, "readable");
+                }
+            }
+
+            &.is-loading {
+                @include T.loader-color(T.variant($name, "readable"));
+            }
+
+            @include T.selection($name);
+        }
+    }
+
+    &:disabled,
+    &.is-disabled {
+        color: T.variant("input", "disabled-color") !important;
+        @include T.locked();
+        opacity: 0.25;
+
+        > img {
+            filter: grayscale(1) !important;
+        }
+    }
+}

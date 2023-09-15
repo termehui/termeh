@@ -1,0 +1,107 @@
+@use "sass:math";
+@use "../termeh" as T;
+
+.gallery {
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+
+    &:after {
+        content: "";
+        flex-grow: 999999999;
+        min-width: T.var("gallery", "mobile-height", 100px);
+        height: 0;
+    }
+
+    > .item {
+        position: relative;
+        display: block;
+        flex-grow: 1;
+        text-decoration: none;
+
+        > img,
+        .thumbnail {
+            object-fit: cover;
+            max-width: 100%;
+            min-width: 100%;
+            vertical-align: bottom;
+        }
+
+        &.is-block {
+            height: auto;
+            width: 100%;
+
+            > img,
+            .thumbnail {
+                height: auto;
+            }
+        }
+
+        &:not(.is-block) {
+            height: T.var("gallery", "mobile-height", 100px);
+            > img,
+            .thumbnail {
+                height: T.var("gallery", "mobile-height", 100px);
+            }
+        }
+    }
+
+    &:not(.is-gapless) {
+        margin: T.negate(math.div(T.gap("micro"), 2));
+        > .item {
+            margin: math.div(T.gap("micro"), 2);
+        }
+
+        @each $name, $gap in T.gaps(T.var("gallery", "gaps", ())) {
+            &.is-#{$name}-gaped {
+                margin: T.negate(math.div($gap, 2));
+                > .item {
+                    margin: math.div($gap, 2);
+                }
+            }
+        }
+    }
+
+    @include T.mobile() {
+        &.is-stackable {
+            .item {
+                height: auto;
+                width: 100%;
+                > img,
+                .thumbnail {
+                    height: auto;
+                }
+            }
+        }
+    }
+
+    @include T.tablet() {
+        &:after {
+            min-width: T.var("gallery", "tablet-height", 200px);
+        }
+
+        > .item:not(.is-block) {
+            height: T.var("gallery", "tablet-height", 200px);
+
+            > img,
+            .thumbnail {
+                height: T.var("gallery", "tablet-height", 200px);
+            }
+        }
+    }
+
+    @include T.desktop() {
+        &:after {
+            min-width: T.var("gallery", "height", 300px);
+        }
+
+        > .item:not(.is-block) {
+            height: T.var("gallery", "height", 300px);
+
+            > img,
+            .thumbnail {
+                height: T.var("gallery", "height", 300px);
+            }
+        }
+    }
+}

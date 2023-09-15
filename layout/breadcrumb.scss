@@ -1,0 +1,20 @@
+@use "sass:math";
+@use "../termeh" as T;
+
+.breadcrumb {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+
+    .separator {
+        color: T.variant("base", "separator");
+        margin: 0 T.gap("micro");
+    }
+
+    .active {
+        color: T.variant("shade", "mute");
+    }
+}

@@ -1,0 +1,174 @@
+@use "../termeh" as T;
+
+:root {
+    font-size: T.var("font", "size", 12px);
+}
+
+::selection {
+    background-color: T.color("primary");
+    color: T.variant("primary", "color");
+}
+
+html {
+    text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    direction: T.var("base", "direction", ltr);
+    min-width: T.var("base", "min-width", 300px);
+    background-color: T.color("base");
+    font-family: T.var("font", "family");
+    font-size: T.var("font", "size", 12px);
+    overflow: hidden;
+    overflow-y: auto;
+    @include T.scrollable(T.color("primary"));
+}
+
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+section {
+    display: block;
+}
+
+blockquote {
+    display: block;
+    padding: T.gap("macro");
+    margin: T.gap("macro");
+    border-radius: T.var("radius", "normal");
+    background-color: T.variant("base", "section");
+}
+
+body,
+button,
+input,
+optgroup,
+select,
+textarea,
+select option {
+    font-family: T.var("font", "family");
+    font-size: 1rem;
+}
+
+select {
+    appearance: menulist;
+    -moz-appearance: menulist;
+    -webkit-appearance: menulist;
+}
+
+code,
+pre {
+    -moz-osx-font-smoothing: auto;
+    -webkit-font-smoothing: auto;
+    font-family: T.var("font", "code-family");
+}
+
+body {
+    color: T.variant("base", "color");
+    line-height: T.var("line-height", "normal", 1.6em);
+}
+
+a {
+    color: T.variant("primary", "readable");
+    cursor: pointer;
+    text-decoration: none;
+    strong {
+        color: T.variant("primary", "readable");
+    }
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+code {
+    direction: ltr;
+    padding: T.gap("macro");
+    font-size: T.var("font", "code-size");
+    font-family: T.var("font", "code-family");
+    color: T.variant("base", "code");
+    background-color: T.variant("base", "section");
+}
+
+hr {
+    display: block;
+    border: none;
+    height: 1px;
+    background-color: T.variant("base", "separator");
+
+    &:not(.is-marginless) {
+        margin: T.gap("macro") 0;
+    }
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    vertical-align: baseline;
+    accent-color: T.color("primary");
+}
+
+small {
+    font-size: T.size("small");
+}
+
+span {
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+strong {
+    color: T.variant("base", "strong");
+    font-weight: T.var("strong", "weight");
+}
+
+fieldset {
+    border: none;
+}
+
+pre {
+    direction: ltr;
+    padding: T.gap("macro");
+    font-size: T.var("font", "code-size");
+    font-family: T.var("font", "code-family");
+    color: T.variant("base", "code");
+    background-color: T.variant("base", "section");
+    white-space: pre;
+    word-wrap: normal;
+    overflow-x: auto;
+    @include T.scrollable(T.color("primary"));
+    @include T.overflow-touch();
+
+    code {
+        background-color: none;
+        color: currentColor;
+        font-size: 1em;
+        padding: 0;
+    }
+}
+
+table {
+    td,
+    th {
+        vertical-align: top;
+        &:not([align]) {
+            text-align: inherit;
+        }
+        th {
+            color: T.variant("base", "strong");
+        }
+    }
+}
+
+p,
+ol,
+ul {
+    &:not(:last-child):not(.is-marginless) {
+        margin-bottom: T.gap("macro");
+    }
+}
+
+li:not(:last-child):not(.is-marginless) {
+    margin-bottom: T.gap("micro");
+}

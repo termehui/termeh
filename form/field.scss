@@ -1,0 +1,60 @@
+@use "../termeh" as T;
+
+.field {
+    display: block;
+
+    &:not(:last-child):not(.is-marginless) {
+        margin-bottom: T.gap("macro");
+    }
+
+    > :not(:last-child):not(.is-marginless):not(.help):not(.error) {
+        margin-bottom: T.gap("micro");
+    }
+
+    > label,
+    .help {
+        display: block;
+    }
+
+    > label {
+        width: 100%;
+    }
+
+    .error {
+        display: none;
+        color: T.variant("error", "readable");
+    }
+
+    &.is-required {
+        > label::after,
+        .field-label::after {
+            content: "*";
+            color: T.variant("primary", "readable");
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("input", "colors", ())) {
+        &.is-#{$name} {
+            &.is-required {
+                > label::after,
+                .field-label::after {
+                    color: T.variant($name, "readable");
+                }
+            }
+
+            @include T.selection($name);
+        }
+    }
+
+    &.is-failed {
+        animation: shake 0.5s ease;
+        .input,
+        .input-like {
+            border-color: T.color("error");
+        }
+
+        .error {
+            display: block;
+        }
+    }
+}

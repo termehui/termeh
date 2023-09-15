@@ -1,0 +1,48 @@
+{
+    "name": "@termehui/termeh",
+    "version": "1.0.0",
+    "private": false,
+    "description": "Modern modular CSS framework",
+    "license": "ISC",
+    "scripts": {
+        "build": "npx sass _demo/style.scss _demo/dist/style.css",
+        "watch": "npx sass -w _demo/style.scss _demo/dist/style.css",
+        "test": "npx sass test.scss"
+    },
+    "files": [
+        "base",
+        "components",
+        "core",
+        "form",
+        "helpers",
+        "layout",
+        "styles.scss",
+        "termeh.scss",
+        "vars.scss"
+    ],
+    "keywords": [
+        "css",
+        "sass",
+        "layout",
+        "grid",
+        "flexbox",
+        "responsive",
+        "framework",
+        "css-framework"
+    ],
+    "authors": [
+        {
+            "email": "m.ajamekramy@gmail.com",
+            "homepage": "http://ekramy.ir",
+            "name": "Mojtaba Ekramy",
+            "role": "Developer"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/termehui/termeh"
+    },
+    "devDependencies": {
+        "sass": "^1.67.0"
+    }
+}

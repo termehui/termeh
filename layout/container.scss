@@ -1,0 +1,39 @@
+@use "../termeh" as T;
+
+.container {
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    max-width: 100%;
+
+    &:not(.is-marginless):not(:last-child) {
+        margin-bottom: T.gap("macro");
+    }
+
+    &:not(.is-fullwidth) {
+        @include T.desktop() {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: T.var("container", "desktop", 960px);
+        }
+        @include T.widescreen() {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: T.var("container", "widescreen", 1200px);
+        }
+        @include T.fullhd() {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: T.var("container", "fullhd", 1500px);
+        }
+    }
+
+    &:not(.is-paddingless) {
+        padding: T.gap("macro");
+        @each $name, $gap in T.gaps(T.var("container", "gaps", ())) {
+            &.is-#{$name}-padded {
+                padding: $gap;
+            }
+        }
+    }
+}

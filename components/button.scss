@@ -1,0 +1,130 @@
+@use "../termeh" as T;
+
+.button {
+    @include T.transition(all);
+    @include T.unselectable();
+    @include T.control();
+    display: inline-block;
+    width: auto;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    padding: T.control-padding();
+    border-radius: T.var("radius", "normal");
+    font-weight: normal;
+
+    &:not(.is-simple) {
+        background-color: T.variant("shade", "light");
+        color: T.variant("shade", "readable");
+
+        &:hover {
+            background-color: T.variant("shade", "light-active");
+        }
+
+        &.is-loading {
+            color: T.variant("shade", "light");
+            @include T.locked();
+            @include T.loader(
+                1em,
+                T.variant("shade", "readable"),
+                T.var("decorator", "size")
+            );
+        }
+    }
+
+    &.is-simple:not(.is-light) {
+        color: T.variant("shade", "readable");
+
+        &:hover {
+            background-color: T.variant("shade", "light");
+        }
+
+        &.is-loading {
+            color: transparent;
+            @include T.locked();
+            @include T.loader(
+                1em,
+                T.variant("shade", "readable"),
+                T.var("decorator", "size")
+            );
+        }
+    }
+
+    &.is-rounded {
+        border-radius: T.var("radius", "rounded");
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:focus,
+    &:active {
+        box-shadow: 0 0 0 T.var("decorator", "size") rgba(T.color("shade"), 0.4);
+    }
+
+    @each $name, $size in T.sizes(T.var("button", "sizes", ())) {
+        &.is-#{$name} {
+            font-size: $size;
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("button", "colors", ())) {
+        &.is-#{$name} {
+            &:not(.is-simple):not(.is-light) {
+                background-color: $color;
+                color: T.variant($name, "color");
+
+                &:hover {
+                    background-color: T.variant($name, "active");
+                }
+
+                &.is-loading {
+                    color: $color;
+                    @include T.loader-color(T.variant($name, "color"));
+                }
+            }
+
+            &.is-simple:not(.is-light) {
+                color: T.variant($name, "readable");
+
+                &:hover {
+                    background-color: T.variant($name, "light");
+                }
+
+                &.is-loading {
+                    color: transparent;
+                    @include T.loader-color(T.variant($name, "readable"));
+                }
+            }
+
+            &.is-light:not(.is-simple) {
+                background-color: T.variant($name, "light");
+                color: T.variant($name, "readable");
+
+                &:hover {
+                    background-color: T.variant($name, "light-active");
+                }
+
+                &.is-loading {
+                    color: T.variant($name, "light");
+                    @include T.loader-color(T.variant($name, "readable"));
+                }
+            }
+
+            &:focus,
+            &:active {
+                box-shadow: 0 0 0 T.var("decorator", "size") rgba($color, 0.4);
+            }
+        }
+    }
+
+    &:disabled,
+    &.is-disabled,
+    fieldset[disabled] & {
+        background: T.variant("input", "disabled") !important;
+        color: T.variant("input", "disabled-color") !important;
+        @include T.locked();
+    }
+}

@@ -1,0 +1,58 @@
+@use "sass:math";
+@use "../termeh" as T;
+
+.header {
+    display: block;
+    box-sizing: border-box;
+    padding: T.control-padding();
+
+    &:not(.is-marginless) {
+        margin-bottom: T.gap("macro");
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-bottom: 0 !important;
+    }
+
+    &.is-left-decorated {
+        border-left: T.var("decorator", "size") solid T.color("shade");
+    }
+
+    &.is-right-decorated {
+        border-right: T.var("decorator", "size") solid T.color("shade");
+    }
+
+    @each $name, $gap in T.gaps(T.var("header", "gaps", ())) {
+        &.is-#{$name}-padded {
+            padding: math.div($gap, 2) $gap;
+        }
+    }
+
+    @each $name, $color in T.colors(T.var("header", "colors", ())) {
+        &.is-#{$name} {
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                color: T.variant($name, "readable");
+            }
+
+            &.is-left-decorated {
+                border-left-color: $color;
+            }
+
+            &.is-right-decorated {
+                border-right-color: $color;
+            }
+
+            @include T.selection($name);
+        }
+    }
+}

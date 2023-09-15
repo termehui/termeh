@@ -1,0 +1,44 @@
+@use "../termeh" as T;
+
+.meta {
+    display: inline-block;
+    text-decoration: none;
+    background: none;
+    color: T.variant("shade", "mute");
+    line-height: T.var("line-height", "inline", 1.6em);
+    @include T.unselectable();
+
+    &.is-action {
+        cursor: pointer;
+        text-decoration: none;
+        color: T.color("shade");
+
+        &:hover {
+            text-decoration: none;
+            color: T.variant("shade", "readable");
+        }
+    }
+
+    &:not(.is-wrap){
+        white-space: nowrap;
+    }
+
+    @each $name, $color in T.colors(T.var("meta", "colors", ())) {
+        &.is-#{$name} {
+            &:not(.is-action) {
+                color: T.variant($name, "mute");
+            }
+
+            &.is-action:hover {
+                color: T.variant($name, "readable");
+            }
+        }
+    }
+
+    &:disabled,
+    &.is-disabled {
+        color: T.variant("input", "disabled-color") !important;
+        @include T.locked();
+        opacity: 0.25;
+    }
+}

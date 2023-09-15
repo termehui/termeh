@@ -1,0 +1,29 @@
+@use "termeh" as T;
+@use "styles.scss";
+
+
+// @debug T.variant("base", "border");
+// @debug T.variant("base", "disabled");
+
+// @each $name, $color in T.colors() {
+//     @debug $name, $color;
+//     @debug "color", T.variant($name, "--color");
+//     @debug "inverse", T.variant($name, "inverse");
+//     @debug "active", T.variant($name, "active");
+//     @debug "active-inverse", T.variant($name, "active-inverse");
+//     @debug "light", T.variant($name, "light");
+//     @debug "light-inverse", T.variant($name, "light-inverse");
+//     @debug "readable", T.variant($name, "readable");
+//     @debug "readable-inverse", T.variant($name, "readable-inverse");
+//     @debug "mute", T.variant($name, "mute");
+//     @debug "mute-inverse", T.variant($name, "mute-inverse");
+//     @debug "foreground", T.variant($name, "foreground");
+//     @debug "foreground-inverse", T.variant($name, "foreground-inverse");
+//     @debug "decorator", T.variant($name, "decorator");
+//     @debug "decorator-inverse", T.variant($name, "decorator-inverse");
+//     @debug "----------------------------------";
+// }
+
+body{
+    @include T.spinner(1em, red, 2px);
+}
