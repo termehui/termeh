@@ -6,7 +6,7 @@
     box-sizing: border-box;
     padding: T.control-padding();
 
-    &:not(.is-marginless) {
+    &:not(:last-child):not(.is-marginless) {
         margin-bottom: T.gap("macro");
     }
 
