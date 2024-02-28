@@ -10,15 +10,6 @@
         margin-bottom: T.gap("macro");
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        margin-bottom: 0 !important;
-    }
-
     &.is-left-decorated {
         border-left: T.var("decorator", "size") solid T.color("shade");
     }
