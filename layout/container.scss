@@ -6,7 +6,7 @@
     box-sizing: border-box;
     max-width: 100%;
 
-    &:not(.is-marginless):not(:last-child) {
+    @include T.marged(){
         margin-bottom: T.gap("macro");
     }
 
@@ -28,7 +28,7 @@
         }
     }
 
-    &:not(.is-paddingless) {
+    @include T.padded() {
         padding: T.gap("macro");
         @each $name, $gap in T.gaps(T.var("container", "gaps", ())) {
             &.is-#{$name}-padded {

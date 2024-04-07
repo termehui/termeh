@@ -289,6 +289,8 @@ You can use `all.scss` file inside sub-directory to import all directory content
 @mixin loader($size, $color, $width);
 @mixin loader-color($color);
 @mixin overlay($color, $filter);
+@mixin marged($lastChild: true); // style :not(:last-child):not(.is-marginless)
+@mixin padded(); // style :not(.is-paddingless)
 ```
 
 ### Base

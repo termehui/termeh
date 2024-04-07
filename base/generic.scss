@@ -98,7 +98,7 @@ hr {
     height: 1px;
     background-color: T.variant("base", "separator");
 
-    &:not(.is-marginless) {
+    @include T.marged(false) {
         margin: T.gap("macro") 0;
     }
 }
@@ -164,11 +164,13 @@ table {
 p,
 ol,
 ul {
-    &:not(:last-child):not(.is-marginless) {
+    @include T.marged() {
         margin-bottom: T.gap("macro");
     }
 }
 
-li:not(:last-child):not(.is-marginless) {
-    margin-bottom: T.gap("micro");
+li {
+    @include T.marged() {
+        margin-bottom: T.gap("micro");
+    }
 }

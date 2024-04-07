@@ -3,7 +3,7 @@
 .field {
     display: block;
 
-    &:not(:last-child):not(.is-marginless) {
+    @include T.marged(){
         margin-bottom: T.gap("macro");
     }
 

@@ -7,7 +7,7 @@ h4,
 h5,
 h6 {
     font-weight: bold;
-    &:not(.is-marginless):not(:last-child) {
+    @include T.marged(){
         margin-bottom: T.gap("macro");
     }
 }

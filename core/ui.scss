@@ -125,7 +125,8 @@
 @mixin selection($name) {
     $name: helper.string-of($name, "selection", "name");
 
-    &::selection, *::selection {
+    &::selection,
+    *::selection {
         background-color: color.color($name);
         color: color.variant($name, "color");
     }
@@ -236,5 +237,23 @@
         bottom: 0;
         background: $color;
         backdrop-filter: $filter;
+    }
+}
+
+@mixin marged($lastChild: true) {
+    @if $lastChild {
+        &:not(:last-child):not(.is-marginless) {
+            @content;
+        }
+    } @else {
+        &:not(.is-marginless) {
+            @content;
+        }
+    }
+}
+
+@mixin padded() {
+    &:not(.is-paddingless) {
+        @content;
     }
 }

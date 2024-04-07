@@ -59,7 +59,7 @@
         }
     }
 
-    &:not(.is-paddingless) {
+    @include T.padded() {
         padding: T.gap("macro");
 
         > .overlay {
