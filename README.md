@@ -290,7 +290,9 @@ You can use `all.scss` file inside sub-directory to import all directory content
 @mixin loader-color($color);
 @mixin overlay($color, $filter);
 @mixin marged($lastChild: true); // style :not(:last-child):not(.is-marginless)
-@mixin padded(); // style :not(.is-paddingless)
+@mixin marginless() // remove element margin-bottom
+  @mixin padded(); // style :not(.is-paddingless)
+@mixin paddingless(); // remove element padding
 ```
 
 ### Base

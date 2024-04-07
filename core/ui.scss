@@ -252,8 +252,20 @@
     }
 }
 
+@mixin marginless() {
+    &:not(:last-child):not(.is-marginless) {
+        margin-bottom: 0;
+    }
+}
+
 @mixin padded() {
     &:not(.is-paddingless) {
         @content;
+    }
+}
+
+@mixin paddingless() {
+    &:not(.is-paddingless) {
+        padding: 0;
     }
 }
