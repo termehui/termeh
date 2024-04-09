@@ -56,9 +56,14 @@ table {
             width: auto;
         }
 
-        &:not(.is-multiline) {
-            white-space: nowrap;
+        &.is-ellipsis {
+            max-width: 1px;
             text-overflow: ellipsis;
+        }
+
+        &:not(.is-multiline) {
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         &.is-sorted {

@@ -308,7 +308,7 @@ You can use `all.scss` file inside sub-directory to import all directory content
   - **tr**: `is-even`, `is-expanded`
     - **.extra**: extra content inside table row to show/hide with `.is-expanded` modifier
     - **th**: `is-center-aligned`, `is-right-aligned`, `is-left-aligned`, `is-filler`, `is-multiline`, `is-sorted`, `is-sortable`, `is-asc`, `is-desc`
-    - **td**: `is-center-aligned`, `is-right-aligned`, `is-left-aligned`, `is-filler`, `is-multiline`, `is-sorted`
+    - **td**: `is-center-aligned`, `is-right-aligned`, `is-left-aligned`, `is-filler`, `is-multiline`, `is-sorted`, `is-ellipsis`
 
 ### Components
 
